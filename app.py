@@ -86,7 +86,7 @@ errorThread = Thread(target=error_message)
 updatingThread = Thread(target=update_message)
 
 '''
-REQUESTS TO ITSAM TO CHANGE LOCATION AND AUDIT
+REQUESTS TO SNIPEIT TO CHANGE LOCATION AND AUDIT
 Gets passed serial by the barcode reader and the location by locationEntry.get()
 '''
 def update_location(serial,location):
@@ -201,7 +201,7 @@ UPDATES THE FRAME
 Get a frame from the camera feed.
 update the camera label to contained the imaged frame
 If updating thread is active (not updating) and the entry for location is not emtpy, try decoding.
-Update the frame every 10ms
+Update the frame every 20ms
 '''
 def update_frame():
     global readingWithCamera
@@ -249,6 +249,11 @@ def closeOnScreenKeyboard(o):
                         pass
         keyboard_process = None
     
+'''
+The purpose of this function is to check the key that is triggered by the physical scanner
+The scanner will type very fast the asset tag (property tag) and press the 'Return' key
+Which will signal this function to run update_location with this tag and reset the textboxes
+'''
 def checkKey(event):
     global asset_tag_read
     if updatingThread is None:
